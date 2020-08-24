@@ -48,11 +48,11 @@ The networking runs on a Protocol Driven Network Layer based on a series of "Net
 For simplicity, I make an "APISession()" object to speed work on this demo app.
 The networking layer can be found HERE:
 
-NetworkingLayer -> Networking
+[NetworkingLayer -> Networking](https://github.com/megatyx/Asurion_Demo_iOS/tree/master/Asurion-iOS-Demo/NetworkingLayer/Networking)
 
 If you are looking for API specific things and not generic, such as Raw Response Objects that conform to Decodable, you can find that here:
 
-NetworkingLayer -> API
+[NetworkingLayer -> API](https://github.com/megatyx/Asurion_Demo_iOS/tree/master/Asurion-iOS-Demo/NetworkingLayer/API)
 
 
 # Unit Tests
