@@ -16,7 +16,7 @@ final class MainVCViewModel {
     
     //MARK: - Status Checks
     //TODO: Add Loader View
-    var networkIsBusy: Bool {return isFetchingPets || isFetchingConfig}
+    var isNetworkBusy: Bool {return isFetchingPets || isFetchingConfig}
     fileprivate var isFetchingConfig: Bool = false
     fileprivate var isFetchingPets: Bool = false
     

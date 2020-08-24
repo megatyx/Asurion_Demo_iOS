@@ -27,10 +27,14 @@ class MainViewController: UIViewController {
     func bindViewModel() {
         self.viewModel.onConfigUpdated = { [weak self] in
             self?.tableView.reloadData()
+            guard let isNetworkBusy = self?.viewModel.isNetworkBusy, !isNetworkBusy else {return}
+            self?.tableView.refreshControl?.endRefreshing()
         }
         
         self.viewModel.onPetsUpdated = {[weak self] in
             self?.tableView.reloadData()
+            guard let isNetworkBusy = self?.viewModel.isNetworkBusy, !isNetworkBusy else {return}
+            self?.tableView.refreshControl?.endRefreshing()
         }
     }
     
@@ -53,6 +57,18 @@ class MainViewController: UIViewController {
         tableView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
         tableView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor).isActive = true
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refresh(_:)), for: .valueChanged)
+        tableView.refreshControl = refreshControl
+    }
+    
+    @objc func refresh(_ sender: Any) {
+        if !self.viewModel.isNetworkBusy {
+            self.viewModel.fetchConfig()
+            self.viewModel.fetchPets()
+        } else {
+            self.tableView.refreshControl?.endRefreshing()
+        }
     }
     
     func checkHoursAndCall() -> Void {
@@ -78,12 +94,18 @@ class MainViewController: UIViewController {
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row == 1 || indexPath.row == 0 {
+        switch indexPath.row {
+        case 0:
+            if self.viewModel.config?.isCallEnabled == false && self.viewModel.config?.isChatEnabled == false {
+                return 0
+            } else {
+                return self.view.frame.height / 9
+            }
+        case 1:
             return self.view.frame.height / 9
-            //return 75
+        default:
+            return self.view.frame.height / 6
         }
-        return self.view.frame.height / 6
-        //return 100
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -106,17 +128,20 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
             cell.chatButtonPushed = { [weak self] _ in
                 self?.checkHoursAndCall()
             }
+            cell.selectionStyle = .none
             return cell
             
         case 1:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "WorkingHoursTableViewCell", for: indexPath) as? WorkingHoursTableViewCell else {return UITableViewCell()}
             cell.officeHoursLabel.text = "Office Hours: \(appConfig.workingTimeString)"
+            cell.selectionStyle = .none
             return cell
         default:
             guard let pet = self.viewModel.pets?[indexPath.row - 2],
                 let cell = tableView.dequeueReusableCell(withIdentifier: "PetTableViewCell", for: indexPath) as? PetTableViewCell else { return UITableViewCell() }
             cell.petImageView.loadImageUsingCache(withUrl: pet.imageURL)
             cell.petNameLabel.text = pet.title
+            cell.selectionStyle = .none
             return cell
         }
     }
