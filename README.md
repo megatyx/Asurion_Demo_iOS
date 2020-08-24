@@ -4,7 +4,7 @@ The Design Target is here:
 
 ![Design Target](https://github.com/megatyx/Asurion_Demo_iOS/blob/master/Design.png)
 
-The assingment instructions can be found here:
+[The assingment instructions can be found here](https://github.com/megatyx/Asurion_Demo_iOS/blob/master/AssignmentOverview.md)
 
 ## Quick Notes
 I wanted to do this in SwiftUI, however, SwiftUI's update hasn't gone into production yet, so I opted for Storyboard + UIKit.
