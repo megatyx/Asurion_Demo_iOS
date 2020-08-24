@@ -1,6 +1,10 @@
 # Asurion_Demo_iOS
-A Demo for the at Asurion
+A Demo for the at Asurion.
+The Design Target is here:
+
 ![Design Target](https://github.com/megatyx/Asurion_Demo_iOS/blob/master/Design.png)
+
+The assingment instructions can be found here:
 
 ## Quick Notes
 I wanted to do this in SwiftUI, however, SwiftUI's update hasn't gone into production yet, so I opted for Storyboard + UIKit.
