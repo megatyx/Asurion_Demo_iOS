@@ -13,6 +13,7 @@ Constants -> APIConstants -> APIRoutes
 # Overview
 This Demo was created on Swift < 5.0 and iOS 13 utilizing a very small version of MVVM.
 The App depends on a heroku server, which might be sleeping on first run. Wait and Refresh if you encounter any issues.
+I have two servers deployed. One on Swift Vapor 4, and one on Golang.
 
 BaseURL:
 https://tyler-pets-server.herokuapp.com/
