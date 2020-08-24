@@ -17,6 +17,9 @@
 		012FD5B624F24E0500F2FAD7 /* OpenDayTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012FD5B524F24E0500F2FAD7 /* OpenDayTime.swift */; };
 		012FD5B824F24E1300F2FAD7 /* OpenDayEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012FD5B724F24E1300F2FAD7 /* OpenDayEnum.swift */; };
 		012FD5BA24F24F9B00F2FAD7 /* Pet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012FD5B924F24F9B00F2FAD7 /* Pet.swift */; };
+		0132D8E924F413F60062E1F8 /* PetsResponseObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0132D8E824F413F60062E1F8 /* PetsResponseObject.swift */; };
+		0132D8EC24F4193B0062E1F8 /* OpenDayTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0132D8EB24F4193B0062E1F8 /* OpenDayTest.swift */; };
+		0132D8F824F42AC40062E1F8 /* UITraitCollectionExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0132D8F724F42AC40062E1F8 /* UITraitCollectionExtensions.swift */; };
 		0157473D24F3011D00EC068F /* WorkingHoursTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0157473B24F3011D00EC068F /* WorkingHoursTableViewCell.swift */; };
 		0157473E24F3011D00EC068F /* WorkingHoursTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0157473C24F3011D00EC068F /* WorkingHoursTableViewCell.xib */; };
 		0164B16024F3FD9B00B1857A /* RawPetsResponseTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0164B15F24F3FD9B00B1857A /* RawPetsResponseTest.swift */; };
@@ -71,6 +74,9 @@
 		012FD5B524F24E0500F2FAD7 /* OpenDayTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenDayTime.swift; sourceTree = "<group>"; };
 		012FD5B724F24E1300F2FAD7 /* OpenDayEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenDayEnum.swift; sourceTree = "<group>"; };
 		012FD5B924F24F9B00F2FAD7 /* Pet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pet.swift; sourceTree = "<group>"; };
+		0132D8E824F413F60062E1F8 /* PetsResponseObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetsResponseObject.swift; sourceTree = "<group>"; };
+		0132D8EB24F4193B0062E1F8 /* OpenDayTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenDayTest.swift; sourceTree = "<group>"; };
+		0132D8F724F42AC40062E1F8 /* UITraitCollectionExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITraitCollectionExtensions.swift; sourceTree = "<group>"; };
 		0157473B24F3011D00EC068F /* WorkingHoursTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkingHoursTableViewCell.swift; sourceTree = "<group>"; };
 		0157473C24F3011D00EC068F /* WorkingHoursTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WorkingHoursTableViewCell.xib; sourceTree = "<group>"; };
 		0164B15F24F3FD9B00B1857A /* RawPetsResponseTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RawPetsResponseTest.swift; sourceTree = "<group>"; };
@@ -157,6 +163,8 @@
 		012FD5A224F17BEF00F2FAD7 /* Asurion-iOS-DemoTests */ = {
 			isa = PBXGroup;
 			children = (
+				0132D8EA24F419230062E1F8 /* ObjectTests */,
+				0164B15E24F3FD7C00B1857A /* ResponseTests */,
 				0164B16124F3FEB700B1857A /* TestResourses */,
 				01B26F0824F273E10071B096 /* ModelTests */,
 				012FD5A524F17BEF00F2FAD7 /* Info.plist */,
@@ -190,6 +198,22 @@
 				012FD5B724F24E1300F2FAD7 /* OpenDayEnum.swift */,
 			);
 			path = TimeComponents;
+			sourceTree = "<group>";
+		};
+		0132D8E724F413AE0062E1F8 /* APIResponseObjects */ = {
+			isa = PBXGroup;
+			children = (
+				0132D8E824F413F60062E1F8 /* PetsResponseObject.swift */,
+			);
+			path = APIResponseObjects;
+			sourceTree = "<group>";
+		};
+		0132D8EA24F419230062E1F8 /* ObjectTests */ = {
+			isa = PBXGroup;
+			children = (
+				0132D8EB24F4193B0062E1F8 /* OpenDayTest.swift */,
+			);
+			path = ObjectTests;
 			sourceTree = "<group>";
 		};
 		014324D024F3E58000A0A1FC /* APIConstants */ = {
@@ -238,6 +262,7 @@
 		017EE93E24F2CD9700E64E9E /* API */ = {
 			isa = PBXGroup;
 			children = (
+				0132D8E724F413AE0062E1F8 /* APIResponseObjects */,
 				017EE96324F2D6B000E64E9E /* Error */,
 				017EE96024F2D67C00E64E9E /* Session */,
 			);
@@ -320,6 +345,7 @@
 			children = (
 				017EE95E24F2D4D100E64E9E /* EncodableExtensions.swift */,
 				017FE5BE24F2F253000AA1BC /* UIImageViewExtensions.swift */,
+				0132D8F724F42AC40062E1F8 /* UITraitCollectionExtensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -386,7 +412,6 @@
 		01B26F0824F273E10071B096 /* ModelTests */ = {
 			isa = PBXGroup;
 			children = (
-				0164B15E24F3FD7C00B1857A /* ResponseTests */,
 				01B26F0924F274060071B096 /* PetsTest.swift */,
 				01B26F0B24F277020071B096 /* AppConfigurationTest.swift */,
 			);
@@ -563,8 +588,10 @@
 				017EE95924F2D37B00E64E9E /* NetworkRequestProtocols.swift in Sources */,
 				012FD59124F17BEE00F2FAD7 /* MainViewController.swift in Sources */,
 				017EE95C24F2D37B00E64E9E /* NetworkOptions.swift in Sources */,
+				0132D8F824F42AC40062E1F8 /* UITraitCollectionExtensions.swift in Sources */,
 				012FD5BA24F24F9B00F2FAD7 /* Pet.swift in Sources */,
 				017EE93B24F2C63500E64E9E /* APIRoutes.swift in Sources */,
+				0132D8E924F413F60062E1F8 /* PetsResponseObject.swift in Sources */,
 				017EE95824F2D37B00E64E9E /* NetworkParametersProtocols.swift in Sources */,
 				017EE95B24F2D37B00E64E9E /* NetworkableProtocol.swift in Sources */,
 				012FD5B324F186A200F2FAD7 /* APIKeys.swift in Sources */,
@@ -592,6 +619,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0132D8EC24F4193B0062E1F8 /* OpenDayTest.swift in Sources */,
 				0164B16024F3FD9B00B1857A /* RawPetsResponseTest.swift in Sources */,
 				01B26F0C24F277020071B096 /* AppConfigurationTest.swift in Sources */,
 				01B26F0A24F274060071B096 /* PetsTest.swift in Sources */,

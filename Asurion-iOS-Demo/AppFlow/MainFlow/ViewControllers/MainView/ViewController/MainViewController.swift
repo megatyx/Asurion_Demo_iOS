@@ -10,33 +10,20 @@ import UIKit
 import SafariServices
 
 class MainViewController: UIViewController {
+    //TODO: Add Loader Views!!!!!!
 
-    let tableView = UITableView()
+    // MARK: - Init TableView with Nibs
+    let tableView: UITableView = {
+        var newTableView = UITableView()
+        newTableView.register(UINib(nibName: "TwoButtonsTableViewCell", bundle: nil), forCellReuseIdentifier: "TwoButtonsTableViewCell")
+        newTableView.register(UINib(nibName: "PetTableViewCell", bundle: nil), forCellReuseIdentifier: "PetTableViewCell")
+        newTableView.register(UINib(nibName: "WorkingHoursTableViewCell", bundle: nil), forCellReuseIdentifier: "WorkingHoursTableViewCell")
+        return newTableView
+    }()
     
+    // MARK: - View Model
     let viewModel: MainVCViewModel = MainVCViewModel()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        bindViewModel()
-        setupTableView()
-        self.viewModel.fetchConfig()
-        self.viewModel.fetchPets()
-    }
-    
-    func setupTableView() {
-        tableView.register(UINib(nibName: "TwoButtonsTableViewCell", bundle: nil), forCellReuseIdentifier: "TwoButtonsTableViewCell")
-        tableView.register(UINib(nibName: "PetTableViewCell", bundle: nil), forCellReuseIdentifier: "PetTableViewCell")
-        tableView.register(UINib(nibName: "WorkingHoursTableViewCell", bundle: nil), forCellReuseIdentifier: "WorkingHoursTableViewCell")
-        tableView.delegate = self
-        tableView.dataSource = self
-        view.addSubview(tableView)
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        tableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        tableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-    }
-
     func bindViewModel() {
         self.viewModel.onConfigUpdated = { [weak self] in
             self?.tableView.reloadData()
@@ -46,16 +33,57 @@ class MainViewController: UIViewController {
             self?.tableView.reloadData()
         }
     }
-
+    
+    // MARK: - Lifecycle Methods
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        bindViewModel()
+        setupTableView()
+        self.viewModel.fetchConfig()
+        self.viewModel.fetchPets()
+    }
+    
+    // MARK: - Funtions
+    func setupTableView() {
+        tableView.delegate = self
+        tableView.dataSource = self
+        view.addSubview(tableView)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        tableView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor).isActive = true
+        tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        tableView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor).isActive = true
+    }
+    
+    func checkHoursAndCall() -> Void {
+        guard let config = self.viewModel.config else {return}
+        let formatter = DateFormatter()
+        formatter.dateFormat = "EEEEE HHmm"
+        let dateStrings = formatter.string(from: Date()).components(separatedBy: " ")
+        guard let comparisonDay = OpenDay(shortDay: dateStrings[0]),
+            let comparisonTime = Int(dateStrings[1]) else {return}
+        var title: String = "Work hours has ended. Please contact us again on the next work day"
+        if OpenDay.weekdayIsBetweenTwo(startDay: config.workingTime.startDay, endDay: config.workingTime.endDay, comparisonDay: comparisonDay) {
+            if config.workingTime.startTime <= comparisonTime && comparisonTime <= config.workingTime.endTime {
+                title = "Thank you for getting in touch with us. We’ll get back to you as soon as possible"
+            }
+        }
+        let alert = UIAlertController(title: title, message: nil, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(alert, animated: true)
+    }
 }
 
+//MARK: - UITableView Delegates
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.row == 1 || indexPath.row == 0 {
-            return 75
+            return self.view.frame.height / 9
+            //return 75
         }
-        return 100
+        return self.view.frame.height / 6
+        //return 100
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -63,6 +91,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         return 2 + (self.viewModel.pets?.count ?? 0)
     }
     
+    // MARK: - Cell For Row At Index Path
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let appConfig = self.viewModel.config else {return UITableViewCell()}
         
@@ -99,24 +128,6 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         config.entersReaderIfAvailable = true
         let vc = SFSafariViewController(url: pet.contentURL, configuration: config)
         present(vc, animated: true)
-    }
-    
-    func checkHoursAndCall() -> Void {
-        guard let config = self.viewModel.config else {return}
-        let formatter = DateFormatter()
-        formatter.dateFormat = "EEEEE HHmm"
-        let dateStrings = formatter.string(from: Date()).components(separatedBy: " ")
-        guard let comparisonDay = OpenDay(shortDay: dateStrings[0]),
-            let comparisonTime = Int(dateStrings[1]) else {return}
-        var title: String = "Work hours has ended. Please contact us again on the next work day"
-        if OpenDay.weekdayIsBetweenTwo(startDay: config.workingTime.startDay, endDay: config.workingTime.endDay, comparisonDay: comparisonDay) {
-            if config.workingTime.startTime <= comparisonTime && comparisonTime <= config.workingTime.endTime {
-                title = "Thank you for getting in touch with us. We’ll get back to you as soon as possible"
-            }
-        }
-        let alert = UIAlertController(title: title, message: nil, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        self.present(alert, animated: true)
     }
 }
 

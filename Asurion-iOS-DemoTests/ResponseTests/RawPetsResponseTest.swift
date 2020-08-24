@@ -16,7 +16,7 @@ class RawPetsResponseTest: XCTestCase {
         XCTAssertNotNil(path)
         let data = try? Data(contentsOf: URL(fileURLWithPath: path!))
         XCTAssertNotNil(data)
-        XCTAssertNoThrow(try JSONDecoder().decode(RawPetsResponse.self, from: data!))
+        XCTAssertNoThrow(try JSONDecoder().decode(PetsRawResponse.self, from: data!))
     }
 
 }

@@ -10,10 +10,10 @@ import Foundation
 enum APIRoutes: String {
     
     case getConfig = "config"
-    case getPets = "cets"
+    case getPets = "pets"
     
     var baseURL: String {
-        return "https://tyler-pets.herokuapp.com/"
+        return "https://tyler-pets-server.herokuapp.com/"
     }
     
     var route: String {

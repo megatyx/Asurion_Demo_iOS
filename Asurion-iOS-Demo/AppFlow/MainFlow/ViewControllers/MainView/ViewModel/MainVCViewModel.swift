@@ -8,29 +8,23 @@
 
 import Foundation
 
-struct RawPetsResponse: Decodable {
-    var pets: [Pet]
-    
-    init(from decoder: Decoder) throws {
-        let values = try decoder.container(keyedBy: APIKeys.Response.PetsResponse.self)
-        self.pets = try values.decode([Pet].self, forKey: .pets)
-    }
-}
-
 final class MainVCViewModel {
-    //Listeners
+    
+    //MARK: - Listeners
     var onConfigUpdated: (() -> Void)?
     var onPetsUpdated: (() -> Void)?
     
-    //Status Checks
+    //MARK: - Status Checks
+    //TODO: Add Loader View
     var networkIsBusy: Bool {return isFetchingPets || isFetchingConfig}
     fileprivate var isFetchingConfig: Bool = false
     fileprivate var isFetchingPets: Bool = false
     
-    //Model Variables
+    //MARK: - Model Variables
     var config: AppConfiguration?
     var pets: [Pet]?
     
+    //MARK: - Networking
     func fetchConfig() {
         isFetchingConfig = true
         APISession(urlSession: .shared).getData(apiRoute: APIRoutes.getConfig) { [weak self] result in
@@ -41,29 +35,28 @@ final class MainVCViewModel {
                     self?.config = try JSONDecoder().decode(AppConfiguration.self, from: data)
                     self?.onConfigUpdated?()
                 } catch {
-                    
+                    print(error)
                 }
-            case .failure(_):
-                return
+            case .failure(let error):
+                print(error.description)
             }
         }
     }
     
     func fetchPets() {
-        print("fetching pets")
         isFetchingPets = true
         APISession(urlSession: .shared).getData(apiRoute: APIRoutes.getPets) { [weak self] result in
             self?.isFetchingPets = false
             switch result {
             case .success(let data):
-                print("pets fetch successful")
                 do {
-                    self?.pets = try JSONDecoder().decode(RawPetsResponse.self, from: data).pets
+                    self?.pets = try JSONDecoder().decode(PetsRawResponse.self, from: data).pets
                     self?.onPetsUpdated?()
                 } catch {
+                    print(error)
                 }
-            case .failure(_):
-                return
+            case .failure(let error):
+                print(error.description)
             }
         }
     }

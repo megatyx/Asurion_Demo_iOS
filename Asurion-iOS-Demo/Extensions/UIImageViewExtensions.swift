@@ -8,8 +8,9 @@
 
 import UIKit
 import Foundation
+import ImageIO
 
-
+// MARK: - Load from the net
 let imageCache = NSCache<NSString, UIImage>()
 extension UIImageView {
     func loadImageUsingCache(withUrl url : URL) {

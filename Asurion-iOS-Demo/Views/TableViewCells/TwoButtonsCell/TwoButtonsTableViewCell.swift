@@ -10,11 +10,14 @@ import UIKit
 
 class TwoButtonsTableViewCell: UITableViewCell {
 
+    // MARK: - Outlets
     @IBOutlet weak var stackView: UIStackView!
     
+    // MARK: - Listeners
     var chatButtonPushed: ((UIButton) -> Void)?
     var callButtonPushed: ((UIButton) -> Void)?
     
+    // MARK: - Variables
     let chatButton = UIButton()
     let callButton = UIButton()
     
@@ -30,9 +33,11 @@ class TwoButtonsTableViewCell: UITableViewCell {
         }
     }
     
+    // MARK: - Lifecycle Methods
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
+        //Set Buttons
         self.callButton.backgroundColor = .green
         self.callButton.setTitleColor(.white, for: .normal)
         self.chatButton.setTitleColor(.white, for: .normal)
@@ -44,11 +49,22 @@ class TwoButtonsTableViewCell: UITableViewCell {
         self.chatButton.layer.cornerRadius = 10
         self.callButton.layer.cornerRadius = 10
         
+        // Vary for Device size
+        if traitCollection.isIpad {
+            self.callButton.titleLabel?.font = .systemFont(ofSize: 30.0)
+            self.chatButton.titleLabel?.font = .systemFont(ofSize: 30.0)
+        } else {
+            self.callButton.titleLabel?.font = .systemFont(ofSize: 20.0)
+            self.chatButton.titleLabel?.font = .systemFont(ofSize: 20.0)
+        }
+        
+        // Detect Touches
         self.chatButton.addTarget(self, action: #selector(TwoButtonsTableViewCell.chatButtonTouchInside(_:)), for: .touchUpInside)
         self.callButton.addTarget(self, action: #selector(TwoButtonsTableViewCell.callButtonTouchInside(_:)), for: .touchUpInside)
         checkAndSetButtons()
     }
     
+    // MARK: - Button OBJC Methods
     @objc func chatButtonTouchInside(_ sender: UIButton) {
         self.chatButtonPushed?(sender)
     }
@@ -57,6 +73,7 @@ class TwoButtonsTableViewCell: UITableViewCell {
         self.callButtonPushed?(sender)
     }
     
+    // MARK: - Class Methods
     func checkAndSetButtons() {
         guard stackView != nil else {return}
         if isCallEnabled && !stackView.subviews.contains(self.callButton) {

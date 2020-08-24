@@ -30,7 +30,6 @@ enum OpenDay: Int {
         case "S", "s":
             guard let prevousDay = relativeToPrevious else {
                 self = .saturday
-                print("Warning: no previous date for comparison")
                 return
             }
             if prevousDay.rawValue >= OpenDay.saturday.rawValue {
@@ -41,7 +40,6 @@ enum OpenDay: Int {
         case "T", "t":
             guard let prevousDay = relativeToPrevious else {
                 self = .tuesday
-                print("Warning: no previous date for comparison")
                 return
             }
             if prevousDay.rawValue >= OpenDay.tuesday.rawValue && prevousDay.rawValue < OpenDay.friday.rawValue {

@@ -12,16 +12,10 @@ class WorkingHoursTableViewCell: UITableViewCell {
 
     @IBOutlet weak var LabelContainerView: UIView!
     @IBOutlet weak var officeHoursLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         LabelContainerView.layer.borderWidth = 2
         LabelContainerView.layer.borderColor = UIColor.lightGray.cgColor
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-    
 }
